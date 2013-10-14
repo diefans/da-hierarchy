@@ -231,8 +231,6 @@ class HierarchyList(list):
 
         :returns: list - the taxonomy items in a list
         """
-        assert 0 <= depth < 4
-
         def descent(itemlist, depth=0):
             """
             recursive descending
