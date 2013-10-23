@@ -75,6 +75,14 @@ class TestHierarchyNode(unittest.TestCase):
 
         self.assertEqual(n1.depth, 2)
 
+    def test_add(self):
+        p = hierarchy.HierarchyNode()
+        c = p.add(foo='bar')
+
+        self.assertNotEqual(p, c)
+        self.assertTrue(c in p.children)
+        self.assertEqual(p.children[0].foo, 'bar')
+
 class TestObject(object):
     def __init__(self, **kw):
         for k, v in kw.iteritems():

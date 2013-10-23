@@ -100,6 +100,14 @@ class HierarchyNode(dict):  # pylint: disable=R0904
             except KeyError:
                 raise AttributeError('%s has neither an attribute nor a dictionary key of that name: %s' % (self.__class__.__name__, name))
 
+    def add(self, *args, **kwargs):
+        """Adds a new node to our children by initializing it with args and kwargs.
+        :returns: the new node
+        """
+        node = self.__class__(*args, **kwargs)
+        node.parent = self
+        return node
+
     def rename_children(self, name):
         """
         gives the children another name
