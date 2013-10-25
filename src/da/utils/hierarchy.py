@@ -5,7 +5,7 @@ means to cover hierarchy issues in a fully abstract way
 
 from itertools import chain, ifilter
 import logging
-from collections import namedtuple
+from collections import namedtuple, OrderedDict
 
 log = logging.getLogger(__name__.split('.')[-1])
 
@@ -69,7 +69,7 @@ def compare_hierarchy(a, b):
         yield diff
 
 
-class HierarchyNode(dict):  # pylint: disable=R0904
+class HierarchyNode(OrderedDict):  # pylint: disable=R0904
     """
     a dict, with parent child relations
     for easy output hierarchical structures without headaches e.g. to json
@@ -84,7 +84,7 @@ class HierarchyNode(dict):  # pylint: disable=R0904
         self.children = list()
         self.parent = None
 
-        dict.__init__(self, *args, **kw)
+        OrderedDict.__init__(self, *args, **kw)
         self.rename_children('children')
 
     def __getattr__(self, name):
@@ -93,7 +93,7 @@ class HierarchyNode(dict):  # pylint: disable=R0904
         :raises: AttributeError if neither attribute nor key was found
         """
         try:
-            return dict.__getattribute__(self, name)
+            return OrderedDict.__getattribute__(self, name)
         except AttributeError:
             try:
                 return self[name]
